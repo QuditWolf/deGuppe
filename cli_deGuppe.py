@@ -28,18 +28,18 @@ def print_bootstrap_lines(line):
 print(term.format("Starting Tor:\n", term.Attr.BOLD))
 
 
-#tor_process = stem.process.launch_tor_with_config(
-#  config = {
-#    'ControlPort': '9151',
-#    'SocksPort': str(SOCKS_PORT),
-#    'Log': [
-#            'NOTICE stdout',
-#            'ERR file ./tor_error_log',
-#          ]
-#
-#  },
-#  init_msg_handler = print_bootstrap_lines,
-#)
+tor_process = stem.process.launch_tor_with_config(
+  config = {
+    'ControlPort': '9151',
+    'SocksPort': str(SOCKS_PORT),
+    'Log': [
+            'NOTICE stdout',
+            'ERR file ./tor_error_log',
+          ]
+
+  },
+  init_msg_handler = print_bootstrap_lines,
+)
 
 #SOCKS_PORT=9050
 socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, '127.0.0.1', SOCKS_PORT)
