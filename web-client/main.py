@@ -61,7 +61,7 @@ async def chat(event: Event):
         #await websocket.send_json(response)
         print("RECEIVED",response)
 #        await manager.send_personal_message(f"{sender} wrote: {event.content}",mywebsocket)
-        await manager.broadcast(f"{sender} wrote: mysidethrutor {event.content}")
+        await manager.broadcast(f"{sender} wrote: {event.content}") #myside thru tor
 
 #to get from local website and send to other user via tor
 @app.websocket("/ws/{client_id}")
@@ -78,7 +78,7 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
             await manager.send_personal_message(f"You wrote: {data}", websocket)
 #            await manager.broadcast(f"Client #{client_id} says: {data}")
             #todo send message via tor to all connected clients
-            tor.post(url,{"sender":sender, "content":"thru tor" +  data})
+            tor.post(url,{"sender":sender, "content": data}) #thru tor
     except WebSocketDisconnect:
         manager.disconnect(websocket)
 #        await manager.broadcast(f"Client #{client_id} left the chat")
