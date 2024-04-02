@@ -18,10 +18,18 @@ class tor_repo():
 
         self.key_path = os.path.expanduser(key)
         self.SOCKS_PORT = SOCKS_PORT
-        if start_tor:
+        if start_tor and not self._tor_process_exists():
             self.start_tor()
         self.tr = TorRequest()
         
+    def _tor_process_exists(self):
+        try:
+            ctrl = Controller.from_port(port=self.SOCKS_PORT+1)
+            ctrl.close()
+            return True
+        except:
+            return False
+
     def start_tor(self):
         # Start an instance of Tor configured. This prints
         # Tor's bootstrap information as it starts. Note that this likely will not
