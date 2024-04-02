@@ -24,6 +24,7 @@ class ConnectionManager:
             await connection.send_text(message)
 
 #url = input("enter tor address")
+url=""
 sender = "blank" #input("enter your nick")
 
 manager = ConnectionManager()
@@ -96,7 +97,8 @@ def get_home(request: Request):
 
 @app.get("/api/start/{my_nick}/{talkto}")
 def get_register(my_nick: str, talkto: str):
-    global url, sender
+    global url
+    global sender
     url = talkto
     sender = my_nick 
     tor.post(url,{"sender":sender, "content": "joined"})
