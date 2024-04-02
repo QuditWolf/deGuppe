@@ -23,8 +23,8 @@ class ConnectionManager:
         for connection in self.active_connections:
             await connection.send_text(message)
 
-url = "svomhrvjpp3czbo3ryatvvj46nkseaq3p5nzpik76scyenfgw3xss4id.onion/api/event_bucket"
-sender = "local_shabd"
+url = input("enter tor address")
+sender = input("enter your nick")
 
 manager = ConnectionManager()
 
