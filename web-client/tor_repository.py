@@ -91,7 +91,7 @@ class tor_repo():
                 print(response, response.json)  # not your IP address
             except Exception as e:
                 print(f"Error posting data: {e}")
-        thread = threading.Thread(target=post_thread, args=(url, data))
+        thread = threading.Thread(target=post_func, args=(url, data))
         thread.start()
       #r = rt.post(url,json=data)
 
