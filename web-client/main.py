@@ -70,7 +70,7 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
     await manager.connect(websocket)
 #    await manager.broadcast(f"Client #{client_id} joined the chat")
     #todo tor broadcast join event
-#    tor.post(url,{"sender":sender, "content": "joined"})
+    tor.post(url,{"sender":sender, "content": "joined"})
     try:
         while True:
             print("while mein phasa")
