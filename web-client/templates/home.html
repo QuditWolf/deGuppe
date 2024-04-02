@@ -6,12 +6,6 @@
     <body>
         <h1>WebSocket Chat</h1>
         
-	<form action="" onsubmit="registerReceiver(event)">
-            <input type="text" id="mynick" autocomplete="off" placeholder="enter your nickname"/>
-            <input type="text" id="talktoid" autocomplete="off" placeholder="enter deGuppe Id to talk to:"/>
-            <button>Connect</button>
-        </form>
-        
 	<h2>Your Identity (nick @ address): <span id="ws-id"></span></h2>
         
 	<form action="" onsubmit="sendMessage(event)">
@@ -25,13 +19,13 @@
             var client_id = Date.now()
 //            document.querySelector("#ws-id").textContent = client_id;
 	    updateNick();
-	    function registerReceiver(event){
+	    function register_rec(event){
 
-		    var mynick = document.getElementById('mynick')
-		    var talkto = document.getElementById('talktoid')
+		    var mynick = document.getElementById('mynick').value
+		    var talkto = document.getElementById('talktoid').value
 
 		    // Construct the URL with the variables
-		    const apiUrl = `https://api.example.com/data/${mynick}/${talktoid}`;
+		    const apiUrl = `http://${window.location.host}/api/start/${mynick}/${talktoid}`;
 
 		    // Make a GET request to the constructed URL
 		    fetch(apiUrl)
@@ -66,7 +60,7 @@
 		    .then(data => {
 			    // Extract two details from the JSON response
 			    const onion = data.onion_address;
-			    const nick = mynick; //data.nickname;
+			    const nick = data.nickname;
 
 			    // Do something with the extracted details
 			    console.log('onion:', onion);

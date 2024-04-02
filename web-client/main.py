@@ -23,9 +23,8 @@ class ConnectionManager:
         for connection in self.active_connections:
             await connection.send_text(message)
 
-#url = input("enter tor address")
-url=""
-sender = "blank" #input("enter your nick")
+url = input(" \n\n enter tor address: ")
+sender = input("enter your nick: ")
 
 manager = ConnectionManager()
 
@@ -101,6 +100,7 @@ def get_register(my_nick: str, talkto: str):
     global sender
     url = talkto
     sender = my_nick 
+    print("GOOT",url,sender)
     tor.post(url,{"sender":sender, "content": "joined"})
 
 @app.get("/api/me")
