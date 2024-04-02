@@ -23,8 +23,8 @@ class ConnectionManager:
         for connection in self.active_connections:
             await connection.send_text(message)
 
-url = input("enter tor address")
-sender = input("enter your nick")
+#url = input("enter tor address")
+sender = "blank" #input("enter your nick")
 
 manager = ConnectionManager()
 
@@ -70,7 +70,7 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
     await manager.connect(websocket)
 #    await manager.broadcast(f"Client #{client_id} joined the chat")
     #todo tor broadcast join event
-    tor.post(url,{"sender":sender, "content": "joined"})
+#    tor.post(url,{"sender":sender, "content": "joined"})
     try:
         while True:
             print("while mein phasa")
@@ -94,8 +94,13 @@ templates = Jinja2Templates(directory="templates")
 def get_home(request: Request):
     return templates.TemplateResponse("home.html", {"request": request})
 
-@app.post("/api/start")
-def get_register(senderr: str, urll: str):
+@app.get("/api/start/{my_nick}/{talkto}")
+def get_register(my_nick: str, talkto: str):
     global url, sender
-    url = urll
-    sender = senderr
+    url = talkto
+    sender = my_nick 
+    tor.post(url,{"sender":sender, "content": "joined"})
+
+@app.get("/api/me")
+def me_details():
+    return {"onion_address": tor.service.service_id + ".onion","nickname": sender}
