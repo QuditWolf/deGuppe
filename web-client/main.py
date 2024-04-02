@@ -60,12 +60,13 @@ async def chat(event: Event):
         #repair and accept response from html side
         #await websocket.send_json(response)
         print("RECEIVED",response)
-        await manager.send_personal_message(f"{sender} wrote: {event.content}")
-#        await manager.broadcast(f"{sender} wrote: {event.content}")
+#        await manager.send_personal_message(f"{sender} wrote: {event.content}",mywebsocket)
+        await manager.broadcast(f"{sender} wrote: mysidethrutor {event.content}")
 
 #to get from local website and send to other user via tor
 @app.websocket("/ws/{client_id}")
 async def websocket_endpoint(websocket: WebSocket, client_id: int):
+    global mywebsocket
     await manager.connect(websocket)
 #    await manager.broadcast(f"Client #{client_id} joined the chat")
     #todo tor broadcast join event
