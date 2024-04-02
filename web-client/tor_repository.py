@@ -9,6 +9,8 @@ from datetime import datetime
 
 from tor_request import TorRequest
 
+import threading
+
 class tor_repo():
     def __init__(self,
                  key = "./my_service.key.key",
@@ -83,8 +85,14 @@ class tor_repo():
         self.controller.close()
 
     def post(self,url,data):
-        response = self.tr.post('http://'+ url+'/api/event_bucket', json=data)
-        print(response, response.json)  # not your IP address
+        def post_func(url,data):
+            try:
+                response = self.tr.post('http://'+ url+'/api/event_bucket', json=data)
+                print(response, response.json)  # not your IP address
+            except Exception as e:
+                print(f"Error posting data: {e}")
+        thread = threading.Thread(target=post_thread, args=(url, data))
+        thread.start()
       #r = rt.post(url,json=data)
 
 
