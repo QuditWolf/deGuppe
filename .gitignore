@@ -1,3 +1,15 @@
 __pycache__/
 *.key
 web-client/tor_error_log
+*.pyc
+*.pyo
+*.db
+*.sqlite
+*.sqlite3
+.env
+.DS_Store
+*.log
+msgs.txt
+msgs.csv
+tor_error_log
+my_service_key

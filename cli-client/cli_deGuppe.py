@@ -1,4 +1,21 @@
-#deChat.py
+"""
+cli_deGuppe.py — Terminal client for the deGuppe peer-to-peer messaging system.
+
+Each instance launches a TOR process via stem, registers an ephemeral v3 onion
+hidden service, and communicates with a remote peer over raw TCP sockets routed
+through TOR's SOCKS5 proxy. Messages are stored locally in a per-session SQLite
+database.
+
+Dependencies:
+    stem        — TOR process control and hidden service management
+    PySocks     — SOCKS5 socket proxy (imported as `socks`)
+    sqlite3     — stdlib; local message persistence
+
+Usage:
+    python3 cli_deGuppe.py
+    # Prompts for: listen port, peer .onion address, local alias
+    # Prints your .onion address at startup — share it with your peer
+"""
 import os
 import socket
 import json
@@ -21,6 +38,7 @@ SOCKS_PORT = 9050
 # work if you have another Tor instance running.
 
 def print_bootstrap_lines(line):
+  """Filter and pretty-print TOR bootstrap progress lines to stdout."""
   if "Bootstrapped " in line:
     print(term.format(line, term.Color.BLUE))
 
@@ -104,6 +122,16 @@ print("%s @ %s"%(hostname, service.service_id + ".onion"))
 print("Press ctrl+c to quit")
 
 def get_thread():
+    """
+    Listen for incoming messages from a remote peer.
+
+    Binds a TCP socket on HOST:PORT (0.0.0.0:PORT), accepts one connection,
+    then loops reading data in 1024-byte chunks. Each chunk may contain multiple
+    messages delimited by '###'. Parsed messages are printed to stdout and
+    inserted into the local SQLite database.
+
+    Runs as a daemon thread — exits when the main process exits.
+    """
     con1 = sqlite3.connect(filename)
     cur1 = con1.cursor()
     print("Going to Listen")
@@ -147,6 +175,18 @@ def get_thread():
 
 
 def send_thread():
+    """
+    Read messages from stdin and send them to a remote peer over TOR.
+
+    Prompts for the peer's .onion address and a local display alias. Opens a
+    PySocks SOCKS5 socket (routed through TOR at 127.0.0.1:9050) and connects
+    to the peer's onion address on port 81. Each message entered on stdin is
+    serialized as a Python dict string with a '###' delimiter and sent via
+    socket. Sent messages are also written to the local SQLite database.
+
+    Leave the peer address blank to loopback to your own .onion (useful for
+    testing). Runs as a daemon thread.
+    """
     con2 = sqlite3.connect(filename)
     cur2 = con2.cursor()
     s=socks.socksocket()
