@@ -1,6 +1,12 @@
 # deGuppe
 
-**Decentralized peer-to-peer messaging over TOR hidden services. No central servers, no persistent infrastructure.**
+`TOR` `Blockchain` `Python` `WebSockets` `SQLite`
+
+**Decentralized, peer-run, real-time communication system over TOR with hybrid blockchain storage.**
+
+> 🏆 Best Poster Presentation — 47th National Systems Conference, Systems Society of India
+> · International Soonami Cohort 3 Funded · Best Project Web3/AI for Good — IITD Tryst
+> · Third Prize Overall — IITD Tryst Track · Best Live Demo — IITD Tryst
 
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
@@ -167,9 +173,3 @@ is under active development]
 - **SQLite not suitable for groups** — designed for 1:1 messaging; no group membership or fanout logic
 - **`api.py` has extra dependencies** (`orjson`, `fastapi`) not needed by the CLI client; no separate requirements file exists
 
----
-
-## Presented at
-
-Presented at the **47th National Systems Conference (NSC-47)**, Systems Society of India.
-**Soonami International Cohort 3** funded project (Web3/AI for Good).
